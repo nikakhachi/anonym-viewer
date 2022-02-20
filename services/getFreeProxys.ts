@@ -1,4 +1,5 @@
 import Puppeteer, { Browser, Page } from "puppeteer";
+import logger from "../utils/logger";
 
 interface ProxyArrayItem {
   ip: string;
@@ -19,7 +20,7 @@ const getProxys = async () => {
     await browser.close();
     return data;
   } catch (error) {
-    console.log(error, "\n");
+    logger.error("Get Free Proxies ERROR : ", error);
     return [];
   }
 };

@@ -1,7 +1,7 @@
 import watchYoutubeVideo from "./services/watchYoutubeVideo";
 import { logMyIp } from "./services/logMyIp";
 import { getProcessArgs } from "./services/getProcessArgs";
-import { waitNSeconds } from "./services/waitNSeconds";
+import logger from "./utils/logger";
 
 const args: any = getProcessArgs();
 
@@ -9,22 +9,19 @@ const OPEN_PORTS = ["9050", "9052", "9053", "9054", "9055", "9056", "9057", "905
 
 const loopFunctions = async (loopNum: number, portIndex: number) => {
   try {
-    console.log(`${loopNum} Views will be added to the video`);
-    console.log("------------");
+    logger.info(`${loopNum} Views will be added to the video \n`);
     for (let i = 0; i < loopNum; i++) {
       // const PORT = OPEN_PORTS[i % OPEN_PORTS.length];
       const PORT = OPEN_PORTS[portIndex];
-      console.log("\n");
-      console.log(`Connecting to Tor Proxy PORT : ${PORT}`);
+      logger.debug(`Connecting to Tor Proxy PORT : ${PORT}`);
       const proxy = `127.0.0.1:${PORT}`;
       await logMyIp(proxy);
       await watchYoutubeVideo("https://www.youtube.com/watch?v=o4WccB2yqlk", proxy);
-      console.log(`Views generated : ${i + 1}`);
-      console.log("------------");
+      logger.debug(`Views generated : ${i + 1} \n`);
     }
-    console.log(`${loopNum} Views added`);
+    logger.info(`${loopNum} Views added`);
   } catch (error: any) {
-    console.error("\n", error.message, "\n");
+    logger.error("Root ERROR : ", error);
   }
 };
 

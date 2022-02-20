@@ -1,15 +1,17 @@
 import Puppeteer, { Browser, Page } from "puppeteer";
 import { waitNSeconds } from "./waitNSeconds";
+import logger from "../utils/logger";
 
 const watchYoutubeVideo = async (youtubeLink: string, proxy: string) => {
   try {
-    console.log("Starting Up..");
+    logger.debug("Opening the browser..");
     const browser: Browser = await Puppeteer.launch({ args: [`--proxy-server=socks5://${proxy}`] });
+    logger.debug("Waiting for the page to load..");
     const page: Page = await browser.newPage();
     await page.goto(youtubeLink, {
       waitUntil: "domcontentloaded",
     });
-    console.log("Starting Video Watching..");
+    logger.debug("Watching the video..");
     await page.evaluate(() => {
       setTimeout(() => {
         // Handle Paused Video On Start
@@ -31,10 +33,10 @@ const watchYoutubeVideo = async (youtubeLink: string, proxy: string) => {
       }, 2000);
     });
     await waitNSeconds(35);
-    console.log("Close The Browser");
+    logger.debug("Closing the browser..");
     await browser.close();
   } catch (error) {
-    console.log(error);
+    logger.error("Watch Youtube Video ERROR : ", error);
   }
 };
 
