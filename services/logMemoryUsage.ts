@@ -6,7 +6,7 @@ const logMemoryUsage = () => {
   for (let key in used) {
     text += ` ${key} : ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB |`;
   }
-  logger.debug(text);
+  logger.info(text);
 };
 
 export { logMemoryUsage };

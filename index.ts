@@ -2,6 +2,7 @@ import watchYoutubeVideo from "./services/watchYoutubeVideo";
 import { logMyIp } from "./services/logMyIp";
 import { getProcessArgs } from "./services/getProcessArgs";
 import logger from "./utils/logger";
+import { logMemoryUsage } from "./services/logMemoryUsage";
 
 const args: any = getProcessArgs();
 
@@ -17,9 +18,12 @@ const loopFunctions = async (loopNum: number, portIndex: number) => {
       const proxy = `127.0.0.1:${PORT}`;
       await logMyIp(proxy);
       await watchYoutubeVideo("https://www.youtube.com/watch?v=o4WccB2yqlk", proxy);
+      logMemoryUsage();
       logger.debug(`Views generated : ${i + 1} \n`);
     }
     logger.info(`${loopNum} Views added`);
+    logger.info(`Whole Memory Report : \n`);
+    logMemoryUsage();
   } catch (error: any) {
     logger.error("Root ERROR : ", error);
   }
