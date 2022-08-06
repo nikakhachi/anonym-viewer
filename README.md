@@ -1,3 +1,8 @@
+# Youtube Video Anonymous Viewer
+
+### Application, which you can use to get automatic, bot views on provided youtube video
+#### Even though we use multiple proxies, Youtube still detects views gained from bot and removes the views after some time.
+
 ## Setup Tor Proxy
 
 ##### 1) In Docker Container
